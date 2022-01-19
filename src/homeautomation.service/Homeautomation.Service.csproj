@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>Homeautomation.Service</RootNamespace>
+		<DockerTargetOS>Linux</DockerTargetOS>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<UserSecretsId>ef5dc831-c00b-4bea-aacd-6e55c2bbef46</UserSecretsId>
+		<BaseOutputPath>..\bin</BaseOutputPath>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="config.sh" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+		<PackageReference Include="AutoMapper" Version="11.0.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="LiteDB" Version="5.0.11" />
+		<PackageReference Include="LiteDB.Async" Version="0.0.11" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+	</ItemGroup>
+
+    <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+	    <Exec WorkingDirectory="$(OutDir)\docker" Command="npm install" />
+    </Target>-->
+
+</Project>
