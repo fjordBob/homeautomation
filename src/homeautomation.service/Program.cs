@@ -1,7 +1,5 @@
-using Homeautomation.Service;
 using Homeautomation.Service.Provider;
 using Homeautomation.Service.Settings;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 

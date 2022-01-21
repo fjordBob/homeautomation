@@ -55,11 +55,11 @@ public class TemperatureHumidityController : ControllerBase
     }
 
     [HttpGet]
-    [Route("device/{id}")]
-    public async Task<IActionResult> GetTemperatureHumidityAsync(string id)
+    [Route("{deviceId}")]
+    public async Task<IActionResult> GetTemperatureHumidityAsync(string deviceId)
     {
         List<TemperatureHumidityOutDto> retVal = new();
-        foreach (TemperatureHumidity? item in await TemperatureHumidityProvider.GetTemperatureHumidityAsync(id))
+        foreach (TemperatureHumidity? item in await TemperatureHumidityProvider.GetTemperatureHumidityAsync(deviceId))
         {
             retVal.Add(Mapper.Map<TemperatureHumidityOutDto>(item));
         }
@@ -68,20 +68,20 @@ public class TemperatureHumidityController : ControllerBase
     }
 
     [HttpPost]
-    [Route("device/{id}")]
-    public async Task<IActionResult> PostTemperatureHumidityAsync(string id, [FromBody][Required] TemperatureHumidityDto temperatureHumidityDto)
+    [Route("{deviceId}")]
+    public async Task<IActionResult> PostTemperatureHumidityAsync(string deviceId, [FromBody][Required] TemperatureHumidityDto temperatureHumidityDto)
     {
         if (Devices.DevicesList == null)
         {
             return BadRequest("No device list defined. Contact admin.");
         }
-        if (!Devices.DevicesList.Any(device => device.Id == id))
+        if (!Devices.DevicesList.Any(device => device.Id == deviceId))
         {
             return BadRequest($"Id not defined. Valid id's are: {string.Join(",", Devices.DevicesList.Select(x=>x.Id))}");
         }
 
         TemperatureHumidity mappedTemperatureHumidity = Mapper.Map<TemperatureHumidity>(temperatureHumidityDto);
-        await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(id, mappedTemperatureHumidity);
+        await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
 
         return Ok();
     }
