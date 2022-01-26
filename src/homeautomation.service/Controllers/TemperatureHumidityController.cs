@@ -73,11 +73,15 @@ public class TemperatureHumidityController : ControllerBase
     {
         if (Devices.DevicesList == null)
         {
-            return BadRequest("No device list defined. Contact admin.");
+            return StatusCode(500, "Internal Server Error. No device list defined. Contact admin.");
         }
         if (!Devices.DevicesList.Any(device => device.Id == deviceId))
         {
-            return BadRequest($"Id not defined. Valid id's are: {string.Join(",", Devices.DevicesList.Select(x=>x.Id))}");
+            return NoContent();
+        }
+        if (Devices.DevicesList.Any(device => device.Id == deviceId && device.Type == DeviceTypes.Temperature.ToString()))
+        {
+            return NoContent();
         }
 
         TemperatureHumidity mappedTemperatureHumidity = Mapper.Map<TemperatureHumidity>(temperatureHumidityDto);

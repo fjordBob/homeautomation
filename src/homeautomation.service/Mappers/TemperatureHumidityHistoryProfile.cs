@@ -9,18 +9,18 @@ public class TemperatureHumidityHistoryProfile : Profile
     {
         CreateMap<TemperatureHumidityHistoryOutDto, TemperatureHumidityHistory>()
             .ForMember(
-                dest => dest.Id,
-                opt => opt.MapFrom(src => src.Id))
+                dest => dest.DeviceId,
+                opt => opt.MapFrom(src => src.DeviceId))
             .ForMember(
-                dest => dest.TemperatureHumidityList,
+                dest => dest.Values,
                 opt => opt.MapFrom(src => src.TemperatureHumidityList));
 
         CreateMap<TemperatureHumidityHistory, TemperatureHumidityHistoryOutDto>()
             .ForMember(
-                dest => dest.Id,
-                opt => opt.MapFrom(src => src.Id))
+                dest => dest.DeviceId,
+                opt => opt.MapFrom(src => src.DeviceId))
             .ForMember(
                 dest => dest.TemperatureHumidityList,
-                opt => opt.MapFrom(src => src.TemperatureHumidityList));
+                opt => opt.MapFrom(src => src.Values));
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace Homeautomation.Service.Models;
-public class TemperatureHumidityHistory
+public class SimpleThermostatHistory
 {
     public string? DeviceId
     {
         get; set;
     }
 
-    public List<TemperatureHumidity>? Values
+    public List<SimpleThermostatHistory>? Values
     {
         get; set;
     }

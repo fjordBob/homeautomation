@@ -1,7 +1,7 @@
 ﻿namespace Homeautomation.Service.Dtos;
 public class TemperatureHumidityHistoryOutDto
 {
-    public string? Id
+    public string? DeviceId
     {
         get; set;
     }

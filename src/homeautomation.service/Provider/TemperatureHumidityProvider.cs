@@ -38,21 +38,21 @@ public class TemperatureHumidityProvider
     public async Task<List<TemperatureHumidity>> GetTemperatureHumidityAsync(string deviceId)
     {
         var collection = Database.GetCollection<TemperatureHumidityHistory>();
-        TemperatureHumidityHistory? temperatureHumidityHistory = await collection.Query().Where(x => x.Id == deviceId).SingleAsync();
+        TemperatureHumidityHistory? temperatureHumidityHistory = await collection.Query().Where(x => x.DeviceId == deviceId).SingleAsync();
 
-        return temperatureHumidityHistory.TemperatureHumidityList ?? new List<TemperatureHumidity>();
+        return temperatureHumidityHistory.Values ?? new List<TemperatureHumidity>();
     }
 
     public async Task CreateTemperatureHumidityAsync(string deviceId, TemperatureHumidity temperatureHumidity)
     {
         var collection = Database.GetCollection<TemperatureHumidityHistory>();
 
-        if (await collection.CountAsync(x => x.Id == deviceId) == 0)
+        if (await collection.CountAsync(x => x.DeviceId == deviceId) == 0)
         {
             TemperatureHumidityHistory temperatureHumidityHistory = new TemperatureHumidityHistory()
             {
-                Id = deviceId,
-                TemperatureHumidityList = new List<TemperatureHumidity>() { temperatureHumidity }
+                DeviceId = deviceId,
+                Values = new List<TemperatureHumidity>() { temperatureHumidity }
             };
 
             await collection.InsertAsync(temperatureHumidityHistory);
@@ -61,12 +61,12 @@ public class TemperatureHumidityProvider
         {
             TemperatureHumidityHistory temperatureHumidityHistory = await collection.Query().FirstAsync();
 
-            if (temperatureHumidityHistory.TemperatureHumidityList == null)
+            if (temperatureHumidityHistory.Values == null)
             {
                 throw new ArgumentException("TemperatureHumidityList is empty but shouldn't");
             }
 
-            temperatureHumidityHistory.TemperatureHumidityList.Add(temperatureHumidity);
+            temperatureHumidityHistory.Values.Add(temperatureHumidity);
             await collection.UpdateAsync(temperatureHumidityHistory);
         }
     }
