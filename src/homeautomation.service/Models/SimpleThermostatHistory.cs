@@ -6,7 +6,7 @@ public class SimpleThermostatHistory
         get; set;
     }
 
-    public List<SimpleThermostatHistory>? Values
+    public List<SimpleThermostat>? Values
     {
         get; set;
     }

@@ -11,17 +11,17 @@ namespace Homeautomation.Service.Mappers
             CreateMap<SimpleThermostatHistoryOutDto, SimpleThermostatHistory>()
                 .ForMember(
                     dest => dest.DeviceId,
-                    opt => opt.MapFrom(src => src.Id))
+                    opt => opt.MapFrom(src => src.DeviceId))
                 .ForMember(
                     dest => dest.Values,
-                    opt => opt.MapFrom(src => src.TemperatureHumidityList));
+                    opt => opt.MapFrom(src => src.Values));
 
             CreateMap<SimpleThermostatHistory, SimpleThermostatHistoryOutDto>()
                 .ForMember(
-                    dest => dest.Id,
+                    dest => dest.DeviceId,
                     opt => opt.MapFrom(src => src.DeviceId))
                 .ForMember(
-                    dest => dest.TemperatureHumidityList,
+                    dest => dest.Values,
                     opt => opt.MapFrom(src => src.Values));
         }
     }

@@ -8,7 +8,7 @@ public class SimpleThermostatHistoryOutDto
         get; set;
     }
 
-    public List<SimpleThermostatHistory>? Values
+    public List<SimpleThermostatHistoryOutDto>? Values
     {
         get; set;
     }
