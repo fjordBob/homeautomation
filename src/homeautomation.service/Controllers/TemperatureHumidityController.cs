@@ -79,10 +79,6 @@ public class TemperatureHumidityController : ControllerBase
         {
             return NoContent();
         }
-        if (Devices.DevicesList.Any(device => device.Id == deviceId && device.Type == DeviceTypes.Temperature.ToString()))
-        {
-            return NoContent();
-        }
 
         TemperatureHumidity mappedTemperatureHumidity = Mapper.Map<TemperatureHumidity>(temperatureHumidityDto);
         await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);

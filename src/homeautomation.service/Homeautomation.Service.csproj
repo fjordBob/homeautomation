@@ -13,6 +13,7 @@
 		<DockerfileContext>..\..</DockerfileContext>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'homeautomation' " />
 	<ItemGroup>
 		<None Remove="config.sh" />
 	</ItemGroup>

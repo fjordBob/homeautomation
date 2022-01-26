@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 // Add services to the container.
 builder.Services.AddTransient<TemperatureHumidityProvider>();
+builder.Services.AddTransient<SimpleThermostatProvider>();
 
 var app = builder.Build();
 
@@ -37,7 +38,7 @@ app.UseStaticFiles();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint($"swagger/v1/swagger.json", "Test setup service v1");
+    c.SwaggerEndpoint($"swagger/v1/swagger.json", "Homeautomation v1");
     c.RoutePrefix = string.Empty;
 });
 

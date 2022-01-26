@@ -6,7 +6,7 @@ public class TemperatureHumidityHistoryOutDto
         get; set;
     }
 
-    public List<TemperatureHumidityOutDto>? TemperatureHumidityList
+    public List<TemperatureHumidityOutDto>? Values
     {
         get; set;
     }
