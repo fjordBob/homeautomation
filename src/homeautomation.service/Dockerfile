@@ -4,21 +4,15 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS builder
 # Setup working directory for project
 WORKDIR /app
 
-COPY ./src/homeautomation.service/Homeautomation.Service.csproj ./src/homeautomation.service/
-
-# Restore nuget packages
-RUN dotnet restore "src/homeautomation.service/Homeautomation.Service.csproj"
-
 # Copy project files
-COPY ./src/homeautomation.service/ ./src/homeautomation.service/
+COPY . ./homeautomation.service/
 
-# Build project with Release configuration
-# and no restore, as we did it already
-RUN dotnet build -c Release --no-restore .src/homeautomation.service/Homeautomation.Service.csproj
+# Restore & Build project with Release configuration
+RUN dotnet build -c Release ./homeautomation.service/Homeautomation.Service.csproj
 
 # Publish project to output folder
 # and no build, as we did it already
-WORKDIR /app/src/homeautomation.service
+WORKDIR /app/homeautomation.service
 RUN ls
 RUN dotnet publish -c Release --no-build -o out
 
@@ -35,7 +29,7 @@ WORKDIR /app
 
 # Copy published in previous stage binaries
 # from the `builder` image
-COPY --from=builder /app/src/homeautomation.service/out .
+COPY --from=builder /app/homeautomation.service/out .
 
 # Set URL that App will be exposed
 ENV ASPNETCORE_URLS="http://*:7000"
