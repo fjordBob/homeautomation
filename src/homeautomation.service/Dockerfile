@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["src/homeautomation.service/Homeautomation.Service.csproj", "src/homeautomation.service/"]
 RUN dotnet restore "src/homeautomation.service/Homeautomation.Service.csproj"
 COPY . .
-WORKDIR "/src/homeautomation.service"
+WORKDIR "/src/src/homeautomation.service"
 RUN dotnet build "Homeautomation.Service.csproj" -c Release -o /app/build
 
 FROM build AS publish
