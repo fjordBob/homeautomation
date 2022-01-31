@@ -31,7 +31,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./src/src/homeautomation.service
+          context: ./src/homeautomation.service
           # build on feature branches, push only on main branch
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: fjordbob/homeautomation:latest
