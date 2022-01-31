@@ -4,13 +4,13 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS builder
 # Setup working directory for project
 WORKDIR /app
 
-COPY src/homeautomation.service/Homeautomation.Service.csproj src/homeautomation.service/
+COPY ./src/homeautomation.service/Homeautomation.Service.csproj ./src/homeautomation.service/
 
 # Restore nuget packages
 RUN dotnet restore "src/homeautomation.service/Homeautomation.Service.csproj"
 
 # Copy project files
-COPY src/homeautomation.service/ src/homeautomation.service/
+COPY ./src/homeautomation.service/ ./src/homeautomation.service/
 
 # Build project with Release configuration
 # and no restore, as we did it already
