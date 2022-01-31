@@ -26,9 +26,11 @@ builder.Services.AddSwaggerGen(c =>
         return returnedValue;
     });
 });
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Add services to the container.
 builder.Services.AddTransient<TemperatureHumidityProvider>();
 builder.Services.AddTransient<SimpleThermostatProvider>();
+builder.Services.AddTransient<SwitchProvider>();
 
 var app = builder.Build();
 

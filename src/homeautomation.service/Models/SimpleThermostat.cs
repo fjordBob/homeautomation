@@ -1,6 +1,11 @@
 ﻿namespace Homeautomation.Service.Models;
 public class SimpleThermostat
 {
+    public int Id
+    {
+        get; set;
+    }
+
     public string? CurrentTemperature
     {
         get; set;

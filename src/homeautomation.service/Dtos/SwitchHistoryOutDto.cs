@@ -1,12 +1,12 @@
 ﻿namespace Homeautomation.Service.Dtos;
-public class DeviceOutDto
+public class SwitchHistoryOutDto
 {
-    public string? Id
+    public string? DeviceId
     {
         get; set;
     }
 
-    public string? Type
+    public List<SwitchOutDto>? Values
     {
         get; set;
     }

@@ -27,7 +27,9 @@ public class SimpleThermostatProvider
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         Devices = devicesConfiguration.Value ?? throw new ArgumentNullException(nameof(devicesConfiguration));
-        Database = new LiteDatabaseAsync("Filename=homeautomation.db;Connection=shared;Password=hunter2");
+        DirectoryInfo? dbDir = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "data"));
+        string? path = Path.Combine(dbDir.FullName, "homeautomation.db");
+        Database = new LiteDatabaseAsync($"Filename={path};Connection=shared;Password=hunter2");
     }
 
     public async Task<List<SimpleThermostatHistory>> GetSimpleThermostatHistoryAsync()

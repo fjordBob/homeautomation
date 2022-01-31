@@ -7,16 +7,12 @@
 		<RootNamespace>Homeautomation.Service</RootNamespace>
 		<DockerTargetOS>Linux</DockerTargetOS>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<UserSecretsId>ef5dc831-c00b-4bea-aacd-6e55c2bbef46</UserSecretsId>
-		<BaseOutputPath>..\bin</BaseOutputPath>
+		<UserSecretsId>ef5dc831-c00b-4bea-aacd-6e55c2bbef46</UserSecretsId>		
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'homeautomation' " />
-	<ItemGroup>
-		<None Remove="config.sh" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
@@ -30,9 +26,5 @@
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 	</ItemGroup>
-
-    <!--<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	    <Exec WorkingDirectory="$(OutDir)\docker" Command="npm install" />
-    </Target>-->
 
 </Project>
