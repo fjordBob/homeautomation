@@ -1,22 +1,17 @@
 ﻿namespace Homeautomation.Service.Models;
-public class TemperatureHumidity
+public class SwitchHistory
 {
     public int Id
     {
         get; set;
     }
 
-    public string? Temperature
+    public string? DeviceId
     {
         get; set;
     }
 
-    public string? Humidity
-    {
-        get; set;
-    }
-
-    public DateTime? TimeStamp
+    public List<Switch>? Values
     {
         get; set;
     }

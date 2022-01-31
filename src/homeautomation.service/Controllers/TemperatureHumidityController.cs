@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Homeautomation.Service.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class TemperatureHumidityController : ControllerBase
 {
     private ILogger<TemperatureHumidityController> Logger
@@ -76,10 +76,6 @@ public class TemperatureHumidityController : ControllerBase
             return StatusCode(500, "Internal Server Error. No device list defined. Contact admin.");
         }
         if (!Devices.DevicesList.Any(device => device.Id == deviceId))
-        {
-            return NoContent();
-        }
-        if (Devices.DevicesList.Any(device => device.Id == deviceId && device.Type == DeviceTypes.Temperature.ToString()))
         {
             return NoContent();
         }

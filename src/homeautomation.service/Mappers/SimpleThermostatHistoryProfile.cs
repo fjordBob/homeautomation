@@ -3,11 +3,11 @@ using Homeautomation.Service.Dtos;
 using Homeautomation.Service.Models;
 
 namespace Homeautomation.Service.Mappers;
-public class TemperatureHumidityHistoryProfile : Profile
+public class SimpleThermostatHistoryProfile : Profile
 {
-    public TemperatureHumidityHistoryProfile()
+    public SimpleThermostatHistoryProfile()
     {
-        CreateMap<TemperatureHumidityHistoryOutDto, TemperatureHumidityHistory>()
+        CreateMap<SimpleThermostatHistoryOutDto, SimpleThermostatHistory>()
             .ForMember(
                 dest => dest.DeviceId,
                 opt => opt.MapFrom(src => src.DeviceId))
@@ -15,7 +15,7 @@ public class TemperatureHumidityHistoryProfile : Profile
                 dest => dest.Values,
                 opt => opt.MapFrom(src => src.Values));
 
-        CreateMap<TemperatureHumidityHistory, TemperatureHumidityHistoryOutDto>()
+        CreateMap<SimpleThermostatHistory, SimpleThermostatHistoryOutDto>()
             .ForMember(
                 dest => dest.DeviceId,
                 opt => opt.MapFrom(src => src.DeviceId))

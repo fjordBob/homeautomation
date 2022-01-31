@@ -1,12 +1,12 @@
 ﻿namespace Homeautomation.Service.Dtos;
-public class DeviceOutDto
+public class SwitchOutDto
 {
-    public string? Id
+    public bool? IsActive
     {
         get; set;
     }
 
-    public string? Type
+    public DateTime? TimeStamp
     {
         get; set;
     }

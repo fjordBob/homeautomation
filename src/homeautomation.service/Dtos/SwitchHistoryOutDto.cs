@@ -1,12 +1,12 @@
 ﻿namespace Homeautomation.Service.Dtos;
-public class TemperatureHumidityHistoryOutDto
+public class SwitchHistoryOutDto
 {
     public string? DeviceId
     {
         get; set;
     }
 
-    public List<TemperatureHumidityOutDto>? Values
+    public List<SwitchOutDto>? Values
     {
         get; set;
     }

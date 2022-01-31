@@ -1,17 +1,12 @@
 ﻿namespace Homeautomation.Service.Models;
-public class TemperatureHumidity
+public class Switch
 {
     public int Id
     {
         get; set;
     }
 
-    public string? Temperature
-    {
-        get; set;
-    }
-
-    public string? Humidity
+    public bool? IsActive
     {
         get; set;
     }

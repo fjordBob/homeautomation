@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace Homeautomation.Service.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class DeviceController : ControllerBase
 {
     private ILogger<DeviceController> Logger

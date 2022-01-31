@@ -26,7 +26,10 @@ public class TemperatureHumidityProvider
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         Devices = devicesConfiguration.Value ?? throw new ArgumentNullException(nameof(devicesConfiguration));
-        Database = new LiteDatabaseAsync("Filename=homeautomation.db;Connection=shared;Password=hunter2");
+        DirectoryInfo? dbDir = Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "data"));
+        string? path = Path.Combine(dbDir.FullName, "homeautomation.db");
+        Database = new LiteDatabaseAsync($"Filename={path};Connection=shared;Password=hunter2");
+        
     }
 
     public async Task<List<TemperatureHumidityHistory>> GetTemperatureHumidityHistoryAsync()
@@ -66,7 +69,7 @@ public class TemperatureHumidityProvider
                 throw new ArgumentException("TemperatureHumidityList is empty but shouldn't");
             }
 
-            temperatureHumidityHistory.Values.Add(temperatureHumidity);
+            temperatureHumidityHistory.Values.Add(temperatureHumidity);            
             await collection.UpdateAsync(temperatureHumidityHistory);
         }
     }
