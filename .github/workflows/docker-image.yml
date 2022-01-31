@@ -23,7 +23,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: itsmetommy/hello-github-actions
+          images: fjordbob/homeautomation
 
       - name: Build and push
         uses: docker/build-push-action@v2
