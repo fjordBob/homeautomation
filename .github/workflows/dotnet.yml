@@ -37,7 +37,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         #context: .
-        #file: homeautomation/src/service
+        file: src/service
         push: true
         tags: fjordbob/homeautomation:latest      
 
