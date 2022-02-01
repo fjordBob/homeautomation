@@ -24,10 +24,10 @@ jobs:
     - name: Publish
       run: dotnet publish --no-restore -c Release
 
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+    # - name: Set up QEMU
+    #   uses: docker/setup-qemu-action@v1
+    # - name: Set up Docker Buildx
+    #   uses: docker/setup-buildx-action@v1
     - name: Login to DockerHub
       uses: docker/login-action@v1 
       with:
@@ -36,8 +36,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        #context: .
-        file: src/service/Dockerfile
+        # context: .
+        # file: src/service/Dockerfile
         push: true
         tags: fjordbob/homeautomation:latest      
 
