@@ -10,7 +10,9 @@ namespace Homeautomation.Service.Tests;
 [TestClass]
 public class TemperatureHumidityControllerTest
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private static IMapper mapper;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     public TemperatureHumidityControllerTest()
     {
