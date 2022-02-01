@@ -3,8 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-#Db's
+# Db's
 [Dd]ata/
+
+# Syno
+.DS_Store
 
 # User-specific files
 *.suo
