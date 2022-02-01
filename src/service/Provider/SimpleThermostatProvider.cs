@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Homeautomation.Service.Provider;
 
-public class SimpleThermostatProvider
+public class SimpleThermostatProvider : ISimpleThermostatProvider
 {
     private ILogger<TemperatureHumidityProvider> Logger
     {

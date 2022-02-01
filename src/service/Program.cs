@@ -28,9 +28,9 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 // Add services to the container.
-builder.Services.AddTransient<ITemperatureHumidityProvider>();
-builder.Services.AddTransient<ISimpleThermostatProvider>();
-builder.Services.AddTransient<ISwitchProvider>();
+builder.Services.AddTransient<ITemperatureHumidityProvider, TemperatureHumidityProvider>();
+builder.Services.AddTransient<ISimpleThermostatProvider, SimpleThermostatProvider>();
+builder.Services.AddTransient<ISwitchProvider, SwitchProvider>();
 
 var app = builder.Build();
 

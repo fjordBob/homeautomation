@@ -5,7 +5,7 @@ using LiteDB.Async;
 using Microsoft.Extensions.Options;
 
 namespace Homeautomation.Service.Provider;
-public class TemperatureHumidityProvider
+public class TemperatureHumidityProvider : ITemperatureHumidityProvider
 {
     private ILogger<TemperatureHumidityProvider> Logger
     {

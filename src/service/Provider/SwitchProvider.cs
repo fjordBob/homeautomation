@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Homeautomation.Service.Provider;
 
-public class SwitchProvider
+public class SwitchProvider : ISwitchProvider
 {
     private ILogger<TemperatureHumidityProvider> Logger
     {
