@@ -23,7 +23,7 @@ public class SimpleThermostatController : ControllerBase
         get;
     }
 
-    private SimpleThermostatProvider SimpleThermostatProvider
+    private ISimpleThermostatProvider SimpleThermostatProvider
     {
         get;
     }
@@ -34,7 +34,7 @@ public class SimpleThermostatController : ControllerBase
     }
 
     public SimpleThermostatController(ILogger<TemperatureHumidityController> logger, IOptions<DevicesOptions> devicesConfiguration,
-                                            SimpleThermostatProvider simpleThermostatProvider, IMapper mapper)
+                                            ISimpleThermostatProvider simpleThermostatProvider, IMapper mapper)
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         SimpleThermostatProvider = simpleThermostatProvider ?? throw new ArgumentNullException(nameof(simpleThermostatProvider));

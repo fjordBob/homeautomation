@@ -23,7 +23,7 @@ public class TemperatureHumidityController : ControllerBase
         get;
     }
 
-    private TemperatureHumidityProvider TemperatureHumidityProvider
+    private ITemperatureHumidityProvider TemperatureHumidityProvider
     {
         get;
     }
@@ -34,7 +34,7 @@ public class TemperatureHumidityController : ControllerBase
     }
 
     public TemperatureHumidityController(ILogger<TemperatureHumidityController> logger, IOptions<DevicesOptions> devicesConfiguration,
-                                            TemperatureHumidityProvider temperatureHumidityProvider, IMapper mapper)
+                                            ITemperatureHumidityProvider temperatureHumidityProvider, IMapper mapper)
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         TemperatureHumidityProvider = temperatureHumidityProvider ?? throw new ArgumentNullException(nameof(temperatureHumidityProvider));

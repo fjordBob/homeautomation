@@ -23,7 +23,7 @@ public class SwitchController : ControllerBase
         get;
     }
 
-    private SwitchProvider SwitchProvider
+    private ISwitchProvider SwitchProvider
     {
         get;
     }
@@ -34,7 +34,7 @@ public class SwitchController : ControllerBase
     }
 
     public SwitchController(ILogger<SwitchController> logger, IOptions<DevicesOptions> devicesConfiguration,
-                                            SwitchProvider switchProvider, IMapper mapper)
+                                            ISwitchProvider switchProvider, IMapper mapper)
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
         SwitchProvider = switchProvider ?? throw new ArgumentNullException(nameof(switchProvider));
