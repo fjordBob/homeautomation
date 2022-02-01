@@ -5,6 +5,6 @@ ARG source
 WORKDIR /app
 EXPOSE 80
 
-COPY src/service/bin/Release/net6.0/publish .
+COPY bin/Release/net6.0/publish .
 RUN echo $(ls)
 ENTRYPOINT ["dotnet", "Homeautomation.Service.dll"]
