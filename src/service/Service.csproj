@@ -10,6 +10,7 @@
 		<UserSecretsId>ef5dc831-c00b-4bea-aacd-6e55c2bbef46</UserSecretsId>		
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<DockerfileContext>..\..</DockerfileContext>
+		<AssemblyName>Homeautomation.Service</AssemblyName>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'homeautomation' " />
