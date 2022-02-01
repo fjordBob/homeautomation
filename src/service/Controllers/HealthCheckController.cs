@@ -9,10 +9,7 @@ public class HealthCheckController : ControllerBase
     [Route("healthCheck/version")]
     public string GetVersion()
     {
-        System.Reflection.Assembly assembly = typeof(HealthCheckController).Assembly;
-        FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-
-        return fvi.FileVersion;
+        return "1.0.0.0";
     }
 
     [HttpGet]
