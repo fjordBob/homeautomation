@@ -43,6 +43,7 @@ public class SimpleThermostatController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(List<SimpleThermostatHistoryOutDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSimpleThermostatAsync()
     {
         List<SimpleThermostatHistoryOutDto> retVal = new();
@@ -56,6 +57,7 @@ public class SimpleThermostatController : ControllerBase
 
     [HttpGet]
     [Route("{deviceId}")]
+    [ProducesResponseType(typeof(List<SimpleThermostatOutDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSimpleThermostatAsync(string deviceId)
     {
         List<SimpleThermostatOutDto> retVal = new();

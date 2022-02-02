@@ -43,6 +43,7 @@ public class TemperatureHumidityController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(List<TemperatureHumidityHistoryOutDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetTemperatureHumidityAsync()
     {
         List<TemperatureHumidityHistoryOutDto> retVal = new();
@@ -56,6 +57,7 @@ public class TemperatureHumidityController : ControllerBase
 
     [HttpGet]
     [Route("{deviceId}")]
+    [ProducesResponseType(typeof(List<TemperatureHumidityOutDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetTemperatureHumidityAsync(string deviceId)
     {
         List<TemperatureHumidityOutDto> retVal = new();

@@ -43,6 +43,7 @@ public class SwitchController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(List<SwitchHistoryOutDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSwitchAsync()
     {
         List<SwitchHistoryOutDto> retVal = new();
@@ -56,6 +57,7 @@ public class SwitchController : ControllerBase
 
     [HttpGet]
     [Route("{deviceId}")]
+    [ProducesResponseType(typeof(List<SwitchOutDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetSwitchAsync(string deviceId)
     {
         List<SwitchOutDto> retVal = new();
