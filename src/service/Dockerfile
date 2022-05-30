@@ -3,5 +3,5 @@ ARG source
 WORKDIR /app
 EXPOSE 80
 
-COPY bin/Release/net6.0/publish .
+COPY bin/Release/net6.0 .
 ENTRYPOINT ["dotnet", "Homeautomation.Service.dll"]
