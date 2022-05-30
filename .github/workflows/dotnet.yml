@@ -31,7 +31,7 @@ jobs:
       run: dotnet test
       
     - name: Publish
-      run: dotnet publish src/service/Service.csproj --no-build      
+      run: dotnet publish src/service/Service.csproj --no-build -c Release      
       
     - name: Docker meta
       id: meta
