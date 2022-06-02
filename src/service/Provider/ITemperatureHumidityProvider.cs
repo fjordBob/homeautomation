@@ -8,6 +8,8 @@ public interface ITemperatureHumidityProvider
 
     public Task<List<TemperatureHumidity>> GetTemperatureHumidityAsync(string deviceId);
 
+    public Task<TemperatureHumidity?> GetLatestTemperatureHumidityAsync(string deviceId);
+
     public Task CreateTemperatureHumidityAsync(string deviceId, TemperatureHumidity temperatureHumidity);
 }
 

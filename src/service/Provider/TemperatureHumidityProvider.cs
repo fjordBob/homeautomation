@@ -46,6 +46,15 @@ public class TemperatureHumidityProvider : ITemperatureHumidityProvider
         return temperatureHumidityHistory.Values ?? new List<TemperatureHumidity>();
     }
 
+    public async Task<TemperatureHumidity?> GetLatestTemperatureHumidityAsync(string deviceId)
+    {
+        var collection = Database.GetCollection<TemperatureHumidityHistory>();
+        TemperatureHumidityHistory? temperatureHumidityHistory = await collection.Query().Where(x => x.DeviceId == deviceId).SingleAsync();
+        if (temperatureHumidityHistory.Values == null) return null;
+        
+        return temperatureHumidityHistory.Values == null ? null : temperatureHumidityHistory.Values.OrderByDescending(x => x.TimeStamp).First();
+    }
+
     public async Task CreateTemperatureHumidityAsync(string deviceId, TemperatureHumidity temperatureHumidity)
     {
         var collection = Database.GetCollection<TemperatureHumidityHistory>();

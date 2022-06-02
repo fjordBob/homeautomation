@@ -83,7 +83,24 @@ public class TemperatureHumidityController : ControllerBase
         }
 
         TemperatureHumidity mappedTemperatureHumidity = Mapper.Map<TemperatureHumidity>(temperatureHumidityDto);
-        await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
+        TemperatureHumidity? latestTemperatureHumidity = await TemperatureHumidityProvider.GetLatestTemperatureHumidityAsync(deviceId);
+
+        if (latestTemperatureHumidity == null)
+        {
+            await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
+        }
+        else
+        {
+            double mappedTemperature = mappedTemperatureHumidity.Temperature == null ? 0.0 : double.Parse(mappedTemperatureHumidity.Temperature);
+            double latestTemperature = latestTemperatureHumidity.Temperature == null ? 0.0 : double.Parse(latestTemperatureHumidity.Temperature);
+
+            // To avoid entries with a small delta temperature.
+            if ((mappedTemperature > latestTemperature + 0.5) || (mappedTemperature < latestTemperature + 0.5))
+            {
+                await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
+            }
+        }
+        
 
         return Ok();
     }
