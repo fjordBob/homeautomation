@@ -72,7 +72,8 @@ public class TemperatureHumidityProviderTest
             TimeStamp = new DateTime(2020, 5, 23, 1, 20, 0)
         }).Wait();
 
-        var temperatures = sut.GetLatestTemperatureHumidityAsync("temperature_office").Result;
+        Models.TemperatureHumidity? temperatures = sut.GetLatestTemperatureHumidityAsync("temperature_office").Result;
+        Assert.IsTrue(temperatures != null);
         Assert.IsTrue(temperatures.Id == 2);
     }
 
@@ -89,12 +90,20 @@ public class TemperatureHumidityProviderTest
     [TestCleanup]
     public void DoCleanup()
     {
-        string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-        var uri = new UriBuilder(codeBase);
-        string path = Uri.UnescapeDataString(uri.Path);
-        string pathToDbFile = Path.Combine(Path.GetDirectoryName(path), "data");
+        string? pathToExecutingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        File.Delete(Path.Combine(pathToDbFile, "homeautomation.db"));
+        if (pathToExecutingDirectory == null)
+        {
+            throw new DirectoryNotFoundException("No path to executing assembly found.");
+        }
+
+        string pathToDbFile = Path.Combine(pathToExecutingDirectory, "data");
+        string fullFilePathToDbFile = Path.Combine(pathToDbFile, "homeautomation.db");
+
+        if (File.Exists(fullFilePathToDbFile))
+        {
+            File.Delete(fullFilePathToDbFile);
+        }        
     }
 }
 

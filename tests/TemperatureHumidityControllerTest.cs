@@ -74,11 +74,19 @@ public class TemperatureHumidityControllerTest
     [TestCleanup]
     public void DoCleanup()
     {
-        string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-        var uri = new UriBuilder(codeBase);
-        string path = Uri.UnescapeDataString(uri.Path);
-        string pathToDbFile = Path.Combine(Path.GetDirectoryName(path), "data");
+        string? pathToExecutingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        File.Delete(Path.Combine(pathToDbFile, "homeautomation.db"));
+        if (pathToExecutingDirectory == null)
+        {
+            throw new DirectoryNotFoundException("No path to executing assembly found.");
+        }
+
+        string pathToDbFile = Path.Combine(pathToExecutingDirectory, "data");
+        string fullFilePathToDbFile = Path.Combine(pathToDbFile, "homeautomation.db");
+
+        if (File.Exists(fullFilePathToDbFile))
+        {
+            File.Delete(fullFilePathToDbFile);
+        }
     }
 }
