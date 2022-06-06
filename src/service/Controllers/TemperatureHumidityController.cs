@@ -85,7 +85,7 @@ public class TemperatureHumidityController : ControllerBase
         TemperatureHumidity mappedTemperatureHumidity = Mapper.Map<TemperatureHumidity>(temperatureHumidityDto);
         TemperatureHumidity? latestTemperatureHumidity = await TemperatureHumidityProvider.GetLatestTemperatureHumidityAsync(deviceId);
 
-        if (latestTemperatureHumidity == null)
+        if (latestTemperatureHumidity == null)  
         {
             await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
         }
@@ -99,8 +99,7 @@ public class TemperatureHumidityController : ControllerBase
             {
                 await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
             }
-        }
-        
+        }        
 
         return Ok();
     }

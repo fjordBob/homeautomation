@@ -4,6 +4,9 @@ using Homeautomation.Service.Mappers;
 using Homeautomation.Service.Tests.MoqDependencySetup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Homeautomation.Service.Tests;
 
@@ -66,5 +69,16 @@ public class TemperatureHumidityControllerTest
         var okResult = result as NoContentResult;
         Assert.IsNotNull(okResult);
         Assert.AreEqual(204, okResult.StatusCode);
+    }
+
+    [TestCleanup]
+    public void DoCleanup()
+    {
+        string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+        var uri = new UriBuilder(codeBase);
+        string path = Uri.UnescapeDataString(uri.Path);
+        string pathToDbFile = Path.Combine(Path.GetDirectoryName(path), "data");
+
+        File.Delete(Path.Combine(pathToDbFile, "homeautomation.db"));
     }
 }

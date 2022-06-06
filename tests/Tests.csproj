@@ -19,4 +19,8 @@
     <ProjectReference Include="..\src\service\Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="LiteDB" />
+    <None Remove="LiteDB.Async" />
+  </ItemGroup>
 </Project>
