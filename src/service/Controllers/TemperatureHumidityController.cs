@@ -79,7 +79,7 @@ public class TemperatureHumidityController : ControllerBase
         }
         if (!Devices.DevicesList.Any(device => device.Id == deviceId))
         {
-            return NoContent();
+            return StatusCode(404, "No device id in configuration found. Contact admin.");
         }
 
         TemperatureHumidity mappedTemperatureHumidity = Mapper.Map<TemperatureHumidity>(temperatureHumidityDto);
@@ -95,7 +95,7 @@ public class TemperatureHumidityController : ControllerBase
             double latestTemperature = latestTemperatureHumidity.Temperature == null ? 0.0 : double.Parse(latestTemperatureHumidity.Temperature);
 
             // To avoid entries with a small delta temperature.
-            if ((mappedTemperature > latestTemperature + 0.5) || (mappedTemperature < latestTemperature + 0.5))
+            if (Math.Abs(mappedTemperature - latestTemperature) > 0.5)
             {
                 await TemperatureHumidityProvider.CreateTemperatureHumidityAsync(deviceId, mappedTemperatureHumidity);
             }

@@ -52,7 +52,7 @@ public class TemperatureHumidityProviderTest
         {
             Humidity = "45",
             Id = 1,
-            Temperature = "34",
+            Temperature = "23",
             TimeStamp = new DateTime(2020, 5, 23, 3, 20, 0)
         }).Wait();
 
@@ -60,7 +60,7 @@ public class TemperatureHumidityProviderTest
         {
             Humidity = "45",
             Id = 2,
-            Temperature = "34",
+            Temperature = "22.3",
             TimeStamp = new DateTime(2020, 5, 23, 4, 20, 0)
         }).Wait();
 

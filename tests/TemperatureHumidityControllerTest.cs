@@ -59,16 +59,55 @@ public class TemperatureHumidityControllerTest
     }
 
     [TestMethod]
-    public void PostTemperatureHumidityAsync_Valid()
+    public void PostTemperatureHumidityAsync_Invalid_WrongDeviceId()
+    {
+        var sut = new TemperatureHumidityController(LoggerMoq.GetLogger<TemperatureHumidityController>(),
+                                                    DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid),
+                                                    TemperatureHumidityProviderMoq.GetProvider(), mapper);
+
+        var result = sut.PostTemperatureHumidityAsync("fffdfdf", new Dtos.TemperatureHumidityDto()).Result;
+        var okResult = result as ObjectResult;
+        Assert.IsNotNull(okResult);
+        Assert.AreEqual(404, okResult.StatusCode);
+    }
+
+    [TestMethod]
+    public void PostTemperatureHumidityAsync_Invalid_EmptyDeviceId()
     {
         var sut = new TemperatureHumidityController(LoggerMoq.GetLogger<TemperatureHumidityController>(),
                                                     DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid),
                                                     TemperatureHumidityProviderMoq.GetProvider(), mapper);
 
         var result = sut.PostTemperatureHumidityAsync("", new Dtos.TemperatureHumidityDto()).Result;
-        var okResult = result as NoContentResult;
+        var okResult = result as ObjectResult;
         Assert.IsNotNull(okResult);
-        Assert.AreEqual(204, okResult.StatusCode);
+        Assert.AreEqual(404, okResult.StatusCode);
+    }
+
+    [TestMethod]
+    public void PostTemperatureHumidityAsync_Valid_EmptyDataBase()
+    {
+        var sut = new TemperatureHumidityController(LoggerMoq.GetLogger<TemperatureHumidityController>(),
+                                                    DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid),
+                                                    TemperatureHumidityProviderMoq.GetProvider(), mapper);
+
+        var result = sut.PostTemperatureHumidityAsync("temperature_office", new Dtos.TemperatureHumidityDto()).Result;
+        var okResult = result as OkResult;
+        Assert.IsNotNull(okResult);
+        Assert.AreEqual(200, okResult.StatusCode);
+    }
+
+    [TestMethod]
+    public void PostTemperatureHumidityAsync_Valid()
+    {
+        var sut = new TemperatureHumidityController(LoggerMoq.GetLogger<TemperatureHumidityController>(),
+                                                    DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid),
+                                                    TemperatureHumidityProviderMoq.GetProvider(), mapper);
+       
+        var result = sut.PostTemperatureHumidityAsync("temperature_office", new Dtos.TemperatureHumidityDto { Humidity = "34.0", Temperature = "20.0"}).Result;
+        var okResult = result as OkResult;
+        Assert.IsNotNull(okResult);
+        Assert.AreEqual(200, okResult.StatusCode);
     }
 
     [TestCleanup]

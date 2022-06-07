@@ -1,6 +1,7 @@
 ﻿using Homeautomation.Service.Models;
 using Homeautomation.Service.Provider;
 using Moq;
+using System;
 using System.Collections.Generic;
 
 namespace Homeautomation.Service.Tests.MoqDependencySetup;
@@ -15,12 +16,20 @@ internal static  class TemperatureHumidityProviderMoq
                 { 
                     new TemperatureHumidity 
                     {
-                        Temperature = "45",
+                        Temperature = "20.3",
                         Id = 1,
                         Humidity = "70",
-                        TimeStamp = System.DateTime.Now
+                        TimeStamp = new DateTime(2020, 5, 23, 1, 20, 0)
                     }
                 });
+        mockRepo.Setup(repo => repo.GetLatestTemperatureHumidityAsync("temperature_office"))
+                .ReturnsAsync(new TemperatureHumidity
+                    {
+                        Temperature = "20.3",
+                        Id = 1,
+                        Humidity = "70",
+                        TimeStamp = new DateTime(2020, 5, 23, 1, 20, 0)
+                    });
         mockRepo.Setup(repo => repo.GetTemperatureHumidityHistoryAsync())
                 .ReturnsAsync(new List<TemperatureHumidityHistory> 
                 {
@@ -32,17 +41,17 @@ internal static  class TemperatureHumidityProviderMoq
                         {
                             new TemperatureHumidity
                             {
-                                Temperature = "45",
+                                Temperature = "20.3",
                                 Id = 1,
                                 Humidity = "70",
-                                TimeStamp = System.DateTime.Now
+                                TimeStamp = new DateTime(2020, 5, 23, 1, 20, 0)
                             },
                             new TemperatureHumidity
                             {
-                                Temperature = "45",
+                                Temperature = "23.5",
                                 Id = 2,
                                 Humidity = "70",
-                                TimeStamp = System.DateTime.Now
+                                TimeStamp = new DateTime(2020, 5, 23, 1, 10, 0)
                             }
                         }
                     }
