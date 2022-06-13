@@ -1,21 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Homeautomation.Service.Settings;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Options;
 
 namespace Homeautomation.Service.Controllers;
 
-public class HealthCheckController : ControllerBase
+public class HealthCheckController : IHealthCheck
 {
-    [HttpGet]
-    [Route("healthCheck/version")]
-    public string GetVersion()
+    private DevicesOptions Devices
     {
-        return "1.0.0.0";
+        get;
     }
 
-    [HttpGet]
-    [Route("healthCheck/ping")]
-    public bool Ping()
+    public HealthCheckController(IOptions<DevicesOptions> devicesConfiguration)
     {
-        return true;
+        Devices = devicesConfiguration.Value;
+    }
+
+    public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        return Task.FromResult(Devices == null
+                                ? HealthCheckResult.Unhealthy()
+                                : HealthCheckResult.Healthy());
     }
 }

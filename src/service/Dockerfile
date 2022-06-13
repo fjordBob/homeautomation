@@ -3,4 +3,5 @@ WORKDIR /app
 EXPOSE 80
 
 COPY ./bin/Release/net6.0/publish .
+HEALTHCHECK CMD wget --fail http://localhost:80/healthCheck || exit
 ENTRYPOINT ["dotnet", "Homeautomation.Service.dll"]

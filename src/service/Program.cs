@@ -31,19 +31,21 @@ builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddTransient<ITemperatureHumidityProvider, TemperatureHumidityProvider>();
 builder.Services.AddTransient<ISimpleThermostatProvider, SimpleThermostatProvider>();
 builder.Services.AddTransient<ISwitchProvider, SwitchProvider>();
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
 app.UseRouting();
 app.UseAuthorization();
 app.UseStaticFiles();
+app.MapHealthChecks("/healthCheck");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint($"swagger/v1/swagger.json", "Homeautomation v1");
     c.RoutePrefix = string.Empty;
 });
-
+app.MapHealthChecks("/healthCheck");
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
