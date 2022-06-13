@@ -4,6 +4,7 @@ using Homeautomation.Service.Mappers;
 using Homeautomation.Service.Tests.MoqDependencySetup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Polly;
 using System;
 using System.IO;
 using System.Reflection;
@@ -38,11 +39,11 @@ public class TemperatureHumidityControllerTest
         var sut = new TemperatureHumidityController(LoggerMoq.GetLogger<TemperatureHumidityController>(),
                                                     DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid),
                                                     TemperatureHumidityProviderMoq.GetProvider(), mapper);
-
+        
         var result = sut.GetTemperatureHumidityAsync("someDevice").Result;
         var okResult = result as OkObjectResult;
-        Assert.IsNotNull(okResult);
-        Assert.AreEqual(200, okResult.StatusCode);
+        Assert.IsNotNull(okResult, $"Result is null and typeof({result.GetType()})");
+        Assert.AreEqual(200, okResult.StatusCode, "Status code is not 200.");
     }
 
     [TestMethod]
@@ -54,8 +55,8 @@ public class TemperatureHumidityControllerTest
 
         var result = sut.GetTemperatureHumidityAsync().Result;
         var okResult = result as OkObjectResult;
-        Assert.IsNotNull(okResult);
-        Assert.AreEqual(200, okResult.StatusCode);
+        Assert.IsNotNull(okResult, $"Result is null and typeof({result.GetType()})");
+        Assert.AreEqual(200, okResult.StatusCode, "Status code is not 200.");
     }
 
     [TestMethod]
@@ -67,8 +68,8 @@ public class TemperatureHumidityControllerTest
 
         var result = sut.PostTemperatureHumidityAsync("fffdfdf", new Dtos.TemperatureHumidityDto()).Result;
         var okResult = result as ObjectResult;
-        Assert.IsNotNull(okResult);
-        Assert.AreEqual(404, okResult.StatusCode);
+        Assert.IsNotNull(okResult, $"Result is null and typeof({result.GetType()})");
+        Assert.AreEqual(404, okResult.StatusCode, "Status code is not 404.");
     }
 
     [TestMethod]
@@ -80,8 +81,8 @@ public class TemperatureHumidityControllerTest
 
         var result = sut.PostTemperatureHumidityAsync("", new Dtos.TemperatureHumidityDto()).Result;
         var okResult = result as ObjectResult;
-        Assert.IsNotNull(okResult);
-        Assert.AreEqual(404, okResult.StatusCode);
+        Assert.IsNotNull(okResult, $"Result is null and typeof({result.GetType()})");
+        Assert.AreEqual(404, okResult.StatusCode, "Status code is not 404.");
     }
 
     [TestMethod]
@@ -93,8 +94,8 @@ public class TemperatureHumidityControllerTest
 
         var result = sut.PostTemperatureHumidityAsync("temperature_office", new Dtos.TemperatureHumidityDto()).Result;
         var okResult = result as OkResult;
-        Assert.IsNotNull(okResult);
-        Assert.AreEqual(200, okResult.StatusCode);
+        Assert.IsNotNull(okResult, $"Result is null and typeof({result.GetType()})");
+        Assert.AreEqual(200, okResult.StatusCode, "Status code is not 200.");
     }
 
     [TestMethod]
@@ -106,8 +107,8 @@ public class TemperatureHumidityControllerTest
        
         var result = sut.PostTemperatureHumidityAsync("temperature_office", new Dtos.TemperatureHumidityDto { Humidity = "34.0", Temperature = "20.0"}).Result;
         var okResult = result as OkResult;
-        Assert.IsNotNull(okResult);
-        Assert.AreEqual(200, okResult.StatusCode);
+        Assert.IsNotNull(okResult, $"Result is null and typeof({result.GetType()})");
+        Assert.AreEqual(200, okResult.StatusCode, "Status code is not 200.");
     }
 
     [TestMethod]
@@ -126,7 +127,7 @@ public class TemperatureHumidityControllerTest
     [TestCleanup]
     public void DoCleanup()
     {
-        string? pathToExecutingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        string? pathToExecutingDirectory = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
 
         if (pathToExecutingDirectory == null)
         {
@@ -136,9 +137,15 @@ public class TemperatureHumidityControllerTest
         string pathToDbFile = Path.Combine(pathToExecutingDirectory, "data");
         string fullFilePathToDbFile = Path.Combine(pathToDbFile, "homeautomation.db");
 
-        if (File.Exists(fullFilePathToDbFile))
-        {
-            File.Delete(fullFilePathToDbFile);
-        }
+        Policy
+            .Handle<IOException>()
+            .WaitAndRetry(1, _ => TimeSpan.FromSeconds(1))
+            .Execute(() =>
+            {
+                if (File.Exists(fullFilePathToDbFile))
+                {
+                    File.Delete(fullFilePathToDbFile);
+                }
+            });
     }
 }

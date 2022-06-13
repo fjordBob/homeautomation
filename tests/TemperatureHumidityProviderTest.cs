@@ -41,7 +41,7 @@ public class TemperatureHumidityProviderTest
         }).Wait();
 
        var temperatures = sut.GetTemperatureHumidityAsync("temperature_office").Result;
-       Assert.IsTrue(temperatures.Any(x => x.Id == 1));
+       Assert.IsTrue(temperatures.Any(x => x.Id == 1), "No temperature item with id 1 found.");
     }
 
     [TestMethod]
@@ -74,8 +74,8 @@ public class TemperatureHumidityProviderTest
         }).Wait();
 
         Models.TemperatureHumidity? temperatures = sut.GetLatestTemperatureHumidityAsync("temperature_office").Result;
-        Assert.IsTrue(temperatures != null);
-        Assert.IsTrue(temperatures.Id == 2);
+        Assert.IsTrue(temperatures != null, "No temperature item found (GetLatestTemperatureHumidityAsync).");
+        Assert.IsTrue(temperatures.Id == 2, "No temperature item found (GetLatestTemperatureHumidityAsync) with id 2 found.");
     }
 
     [TestMethod]
@@ -85,14 +85,13 @@ public class TemperatureHumidityProviderTest
                                                     DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid));
 
         var temperatures = sut.GetLatestTemperatureHumidityAsync("temperature_office").Result;
-        Assert.IsTrue(temperatures == null);
+        Assert.IsTrue(temperatures == null, "Temperature item is not null (GetLatestTemperatureHumidityAsync).");
     }
 
     [TestCleanup]
     public void DoCleanup()
     {
-        string? pathToExecutingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-
+        string? pathToExecutingDirectory = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
         if (pathToExecutingDirectory == null)
         {
             throw new DirectoryNotFoundException("No path to executing assembly found.");
@@ -103,13 +102,14 @@ public class TemperatureHumidityProviderTest
 
         Policy
             .Handle<IOException>()
-            .WaitAndRetry(1, retryAttempt => TimeSpan.FromSeconds(1), (exception, timeSpan, context) => 
+            .WaitAndRetry(1, _ => TimeSpan.FromSeconds(1))
+            .Execute(() =>
             {
                 if (File.Exists(fullFilePathToDbFile))
                 {
                     File.Delete(fullFilePathToDbFile);
                 }
-            });             
+            });
     }
 }
 
