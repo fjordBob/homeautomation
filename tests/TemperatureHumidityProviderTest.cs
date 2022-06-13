@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Linq;
+using Polly;
 
 namespace Homeautomation.Service.Tests;
 
@@ -100,10 +101,15 @@ public class TemperatureHumidityProviderTest
         string pathToDbFile = Path.Combine(pathToExecutingDirectory, "data");
         string fullFilePathToDbFile = Path.Combine(pathToDbFile, "homeautomation.db");
 
-        if (File.Exists(fullFilePathToDbFile))
-        {
-            File.Delete(fullFilePathToDbFile);
-        }        
+        Policy
+            .Handle<IOException>()
+            .WaitAndRetry(1, retryAttempt => TimeSpan.FromSeconds(1), (exception, timeSpan, context) => 
+            {
+                if (File.Exists(fullFilePathToDbFile))
+                {
+                    File.Delete(fullFilePathToDbFile);
+                }
+            });             
     }
 }
 

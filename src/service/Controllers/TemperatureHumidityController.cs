@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Homeautomation.Service.Dtos;
+using Homeautomation.Service.Filters;
 using Homeautomation.Service.Models;
 using Homeautomation.Service.Provider;
 using Homeautomation.Service.Settings;
@@ -70,6 +71,7 @@ public class TemperatureHumidityController : ControllerBase
     }
 
     [HttpPost]
+    [ValidateModel]
     [Route("{deviceId}")]
     public async Task<IActionResult> PostTemperatureHumidityAsync(string deviceId, [FromBody][Required] TemperatureHumidityDto temperatureHumidityDto)
     {

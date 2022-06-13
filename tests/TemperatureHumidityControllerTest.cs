@@ -110,6 +110,19 @@ public class TemperatureHumidityControllerTest
         Assert.AreEqual(200, okResult.StatusCode);
     }
 
+    [TestMethod]
+    public void PostTemperatureHumidityAsync_Invalid()
+    {
+        var sut = new TemperatureHumidityController(LoggerMoq.GetLogger<TemperatureHumidityController>(),
+                                                    DeviceOptionsMoq.GetDeviceOptions(DeviceOptionsMoq.MoqOptions.Valid),
+                                                    TemperatureHumidityProviderMoq.GetProvider(), mapper);
+
+        Assert.ThrowsExceptionAsync<AggregateException>(async () =>
+        {
+            await sut.PostTemperatureHumidityAsync("temperature_office", new Dtos.TemperatureHumidityDto { Humidity = "zz", Temperature = "zz45.0" });
+        });
+    }
+
     [TestCleanup]
     public void DoCleanup()
     {
