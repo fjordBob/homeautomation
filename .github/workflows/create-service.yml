@@ -1,14 +1,18 @@
-name: Build, Test & Push docker
+name: Build, Test & Push docker for service
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'src/service/**/*'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'src/service/**/*'
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}    
+  IMAGE_NAME: homeautomation.service   
 
 jobs:
   buildTestCreate:

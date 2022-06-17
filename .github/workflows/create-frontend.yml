@@ -1,0 +1,58 @@
+name: Build, Test & Push docker for frontend
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/frontend/**/*'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/frontend/
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: homeautomation.frontend   
+
+jobs:
+  buildTestCreate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build src/frontend/Frontend.csproj --no-restore -c Release
+      
+    - name: Publish
+      run: dotnet publish src/frontend/Frontend.csproj --no-build -c Release      
+      
+    - name: Docker meta
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}      
+      
+    - name: Log in to the Container registry
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        context: ./src/frontend
+        file: src/frontend/Dockerfile
+        push: ${{ github.event_name != 'pull_request' }}
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}      

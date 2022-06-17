@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script type="text/javascript">
+window.onload = function () {
+
+    var xValues = JSON.parse('@Html.Raw(Json.Serialize(@Model.CaptureDate))');
+    var yValues = JSON.parse('@Html.Raw(Json.Serialize(@Model.CaptureTemperature))');
+
+    new Chart("myChart", {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgba(0,0,255,1.0)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        scales: {
+          yAxes: [{ticks: {min: 10, max:40}}],
+        }
+      }
+    });
+}
+</script>
+
+<canvas id="myChart" style="width:100%"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
