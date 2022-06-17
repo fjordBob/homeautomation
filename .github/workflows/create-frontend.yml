@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: [ main ]
     paths:
-      - 'src/frontend/
+      - 'src/frontend/**/*'
 
 env:
   REGISTRY: ghcr.io
