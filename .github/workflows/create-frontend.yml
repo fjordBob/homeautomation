@@ -23,7 +23,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: homeautomation.frontend   
+  IMAGE_NAME: homeautomation-frontend   
 
 jobs:
   buildTestCreate:
