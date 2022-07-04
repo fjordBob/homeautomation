@@ -52,7 +52,7 @@ jobs:
       id: meta
       uses: docker/metadata-action@v4
       with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}      
+        images: ${{ env.REGISTRY }}/fjordBob/${{ env.IMAGE_NAME }}      
       
     - name: Log in to the Container registry
       if: github.event_name != 'pull_request'
