@@ -8,4 +8,5 @@
 	  <AssemblyName>Homeautomation.Frontend</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'frontend' " />
 </Project>
